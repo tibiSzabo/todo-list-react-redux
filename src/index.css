@@ -1,1 +1,11 @@
 @import-normalize;
+
+@font-face {
+    font-family: ubuntu;
+    src: url(./assets/fonts/Ubuntu-Regular.ttf);
+}
+
+body {
+    margin: 0;
+    font-family: ubuntu;
+}
