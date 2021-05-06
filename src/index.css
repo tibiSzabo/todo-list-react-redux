@@ -5,6 +5,13 @@
     src: url(./assets/fonts/Ubuntu-Regular.ttf);
 }
 
+html {
+    box-sizing: border-box;
+  }
+  *, *:before, *:after {
+    box-sizing: inherit;
+  }
+
 body {
     margin: 0;
     font-family: ubuntu;
