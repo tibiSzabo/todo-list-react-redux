@@ -1,10 +1,10 @@
-
+import Title from './components/UI/Title'
 import './App.sass';
 
 function App() {
     return (
         <div className='main'>
-            <div className='header'>Todo list</div>
+            <Title title="Todo list" />
         </div>
     );
 }

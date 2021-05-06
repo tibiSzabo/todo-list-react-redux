@@ -1,5 +1,6 @@
 const initialState = {
-
+    todoList: [],
+    doneList: []
 };
 
 const todoReducer = (state = initialState, action) => {
