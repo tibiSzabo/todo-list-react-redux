@@ -1,9 +1,11 @@
 import Title from './Title';
 
 const Modal = (props) => (
-    <div className='modal'>
+    <div className="modal">
         <Title title={props.title}></Title>
-        {props.children}
+        <div className="modal-body">
+            {props.children}
+        </div>
     </div>
 );
 
