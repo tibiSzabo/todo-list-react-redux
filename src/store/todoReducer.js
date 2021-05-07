@@ -3,6 +3,7 @@ const initialState = {
 };
 
 const todoReducer = (state = initialState, action) => {
+    console.log('[todoReducer] : ', action)
     return state;
 }
 
