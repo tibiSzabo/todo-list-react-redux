@@ -1,5 +1,5 @@
-const overlay = (props) => (
+const Overlay = (props) => (
     <div className='overlay' onClick={props.clickHandler}></div>
 );
 
-export default overlay;
+export default Overlay;

@@ -1,7 +1,7 @@
 import React from 'react';
 
-const todoContainer = (props) => (
+const TodoContainer = (props) => (
     <div></div>
 );
 
-export default todoContainer;
+export default TodoContainer;

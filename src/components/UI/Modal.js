@@ -1,9 +1,10 @@
 import Title from './Title';
 
-const modal = (props) => (
+const Modal = (props) => (
     <div className='modal'>
-        <Title title="Add new TODO"></Title>
+        <Title title={props.title}></Title>
+        {props.children}
     </div>
 );
 
-export default modal;
+export default Modal;

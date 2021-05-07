@@ -1,7 +1,7 @@
 import React from 'react';
 
-const doneContainer = (props) => (
+const DoneContainer = (props) => (
     <div></div>
 );
 
-export default doneContainer;
+export default DoneContainer;

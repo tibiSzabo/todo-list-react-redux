@@ -1,5 +1,5 @@
-const title = (props) => (
+const Title = (props) => (
     <div className='title'>{props.title}</div>
 );
 
-export default title;
+export default Title;
