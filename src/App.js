@@ -6,23 +6,27 @@ import Modal from './components/UI/Modal'
 import AddTodoForm from './components/todo/AddTodoForm'
 import './App.sass';
 import React from 'react';
+import { connect } from 'react-redux';
+import store from './store/store';
 
 class App extends React.Component {
     state = {
         modalOpen: false
     }
-    
+
     componentDidMount() {
-        
+        this.storeSub = store.subscribe(this.persistStoreListener);
+    }
+
+    componentWillUnmount() {
+        this.storeSub.unsubscribe();
     }
 
     addTodoHander = () => this.setState({ modalOpen: true });
 
     closeModalHandler = () => this.setState({ modalOpen: false });
 
-    initStateFromLocalStorage = () => {
-        // const localStorageData = localStorage.getItem()
-    }
+    persistStoreListener = () => localStorage.setItem('store', JSON.stringify(store.getState()));
 
     render() {
         const addTodoModal = this.state.modalOpen ? (
@@ -46,4 +50,6 @@ class App extends React.Component {
     }
 }
 
-export default App;
+export default connect(
+    state => ({todoItemList: state.todoItemList})
+)(App);

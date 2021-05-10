@@ -14,13 +14,13 @@ class AddTodoForm extends React.Component {
 
     handleAddTodo = () => {
         const newTodoName = this.inputRef.current.value;
-        this.setState({error: this.todoWithNameExists(newTodoName)})
+        this.setState({ error: this.todoWithNameExists(newTodoName) })
         if (!this.state.error) {
             this.props.addTodoItem(newTodoName);
         }
     }
 
-    todoWithNameExists = name => this.props.todoItemList.filter(todo => todo.name === name) > 0
+    todoWithNameExists = name => this.props.todoItemList.filter(todo => todo.name === name) > 0;
 
     render() {
         const error = this.state.error ? <ErrorMessage msg="Todo already exists"></ErrorMessage> : null;
