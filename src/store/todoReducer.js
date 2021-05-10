@@ -1,4 +1,4 @@
-import { ADD_TODO } from "./actionTypes";
+import { ADD_TODO, DELETE_TODO } from "./actionTypes";
 
 const initialState = {
     todoItemList: [
@@ -16,7 +16,8 @@ const todoReducer = (state = initialState, action) => {
     };
 
     switch (action.type) {
-        case ADD_TODO: {
+
+        case ADD_TODO:
             return {
                 ...state,
                 todoItemList: [
@@ -30,7 +31,19 @@ const todoReducer = (state = initialState, action) => {
                 ],
                 nextId: state.nextId + 1
             };
-        }
+
+        case DELETE_TODO:
+            return {
+                ...state,
+                todoItemList: [
+                    ...state.todoItemList.reduce((acc, curr) => {
+                        if (curr.id !== action.id) {
+                            acc.push({ ...curr })
+                        }
+                        return acc;
+                    }, [])
+                ]
+            }
 
         default: {
             return state;
