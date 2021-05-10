@@ -55,7 +55,7 @@ button
     flex-direction: column
     .label
         margin-right: 15px
-    .submit 
+    .submit
         display: flex
         justify-content: center
         flex-basis: 100%
@@ -68,3 +68,25 @@ button
     justify-content: center
     padding: 15px
     color: red
+
+.todo-container
+    width: 100%
+
+    .todo-item
+        display: flex
+        align-items: center
+        justify-content: space-between
+        padding: 20px
+        font-size: 1.25rem
+        box-shadow: 4px 4px 9px -9px black, -2px -2px 8px -9px black
+        margin: 15px
+        .todo-item-icons
+            display: flex
+            align-items: center
+            i
+                cursor: pointer
+                &:not(:last-child)
+                    margin-right: 15px
+                &.fa-check-square
+                    font-size: 21px
+                    margin-top: 2px
