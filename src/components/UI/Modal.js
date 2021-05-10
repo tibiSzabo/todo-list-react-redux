@@ -5,10 +5,7 @@ const Modal = (props) => {
 
     let modalRef = useRef(null);
 
-    useEffect(() => {
-        modalRef.current.addEventListener('keydown', handleKeydown)
-        console.log(modalRef)
-    });
+    useEffect(() => modalRef.current.addEventListener('keydown', handleKeydown));
 
     const handleKeydown = event => {
         if (event.code === 'Escape') {

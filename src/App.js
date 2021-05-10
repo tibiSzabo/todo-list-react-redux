@@ -33,13 +33,13 @@ class App extends React.Component {
             <React.Fragment>
                 <Overlay clickHandler={this.closeModalHandler}></Overlay>
                 <Modal title="Add TODO" closeHandler={this.closeModalHandler}>
-                    <AddTodoForm></AddTodoForm>
+                    <AddTodoForm closeHandler={this.closeModalHandler}></AddTodoForm>
                 </Modal>
             </React.Fragment>
         ) : null;
 
         return (
-            <div className='main'>
+            <div className="main">
                 <Title title="Todo list" />
                 {addTodoModal}
                 <TodoContainer todoList={this.props.todoItemList}></TodoContainer>

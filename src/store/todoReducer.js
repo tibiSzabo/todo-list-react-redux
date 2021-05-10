@@ -22,7 +22,7 @@ const todoReducer = (state = initialState, action) => {
                 todoItemList: [
                     ...state.todoItemList.map(i => ({ ...i })),
                     {
-                        name: action.todoTitle,
+                        name: action.todoTitle.trim(),
                         id: state.nextId,
                         done: false,
                         order: getHighestOrder(state.todoItemList.filter(i => !i.done)) + 1
