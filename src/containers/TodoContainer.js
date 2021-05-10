@@ -5,7 +5,7 @@ const TodoContainer = props => {
 
     const todoList = props.todoList.map(todoItem => {
         if (!todoItem.done) {
-            return <TodoItem name={todoItem.name} key={todoItem.id}></TodoItem>
+            return <TodoItem todo={todoItem} key={todoItem.id}></TodoItem>
         }
         return null;
     });
