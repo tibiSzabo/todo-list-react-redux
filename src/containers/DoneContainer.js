@@ -1,5 +1,5 @@
-import React from 'react';
-import TodoItem from '../components/todo/TodoItem';
+// import React from 'react';
+// import TodoItem from '../components/todo/TodoItem';
 
 const DoneContainer = (props) => {
     // const todoList = props.todoList.map(todoItem => {

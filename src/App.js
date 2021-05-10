@@ -32,7 +32,7 @@ class App extends React.Component {
         const addTodoModal = this.state.modalOpen ? (
             <React.Fragment>
                 <Overlay clickHandler={this.closeModalHandler}></Overlay>
-                <Modal title="Add TODO">
+                <Modal title="Add TODO" closeHandler={this.closeModalHandler}>
                     <AddTodoForm></AddTodoForm>
                 </Modal>
             </React.Fragment>

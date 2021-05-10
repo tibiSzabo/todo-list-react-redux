@@ -10,8 +10,6 @@ const TodoContainer = props => {
         return null;
     });
 
-    console.log(todoList);
-
     return (
         <div className="todo-container">
             {todoList}
