@@ -44,7 +44,7 @@ class App extends React.Component {
                 {addTodoModal}
                 <TodoContainer todoList={this.props.todoItemList}></TodoContainer>
                 <button onClick={this.addTodoHander}>Add</button>
-                {/* <DoneContainer></DoneContainer> */}
+                <DoneContainer todoList={this.props.todoItemList}></DoneContainer>
             </div>
         );
     }

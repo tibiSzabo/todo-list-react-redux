@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO } from "./actionTypes";
+import { ADD_TODO, DELETE_TODO, TOGGLE_TODO } from "./actionTypes";
 
 const initialState = {
     todoItemList: [
@@ -10,9 +10,10 @@ const initialState = {
 const todoReducer = (state = initialState, action) => {
     console.log('[todoReducer] : ', action);
 
-    const getHighestOrder = todoList => {
-        if (todoList.length === 0) return 0;
-        return Math.max.apply(Math, todoList.map(t => t.order));
+    const createMaxOrder = () => {
+        const todoList = state.todoItemList.filter(i => !i.done);
+        if (todoList.length === 0) return 1;
+        return Math.max.apply(Math, todoList.map(t => t.order)) + 1;
     };
 
     switch (action.type) {
@@ -26,7 +27,7 @@ const todoReducer = (state = initialState, action) => {
                         name: action.todoTitle.trim(),
                         id: state.nextId,
                         done: false,
-                        order: getHighestOrder(state.todoItemList.filter(i => !i.done)) + 1
+                        order: createMaxOrder()
                     }
                 ],
                 nextId: state.nextId + 1
@@ -45,9 +46,23 @@ const todoReducer = (state = initialState, action) => {
                 ]
             }
 
-        default: {
+        case TOGGLE_TODO:
+            return {
+                ...state,
+                todoItemList: [
+                    ...state.todoItemList.reduce((acc, curr) => {
+                        if (curr.id === action.id) {
+                            curr.done = !curr.done;
+                            curr.order = curr.done ? null: createMaxOrder();
+                        }
+                        acc.push({ ...curr })
+                        return acc;
+                    }, [])
+                ]
+            }
+
+        default:
             return state;
-        }
     }
 
 }

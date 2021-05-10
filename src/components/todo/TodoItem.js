@@ -4,25 +4,36 @@ import { DELETE_TODO, TOGGLE_TODO } from "../../store/actionTypes";
 const TodoItem = props => {
 
     const deleteIconClickHandler = () => props.deleteTodoItem(props.todo.id);
-    const editIconClickHandler = () => {};
-    const doneIconClickHandler = () => props.toggleTodoItem(props.todo.id);
+    const editIconClickHandler = () => { };
+    const toggleIconClickHandler = () => props.toggleTodoItem(props.todo.id);
 
-    return (
-        <div className="todo-item">
-            <div>{props.todo.name}</div>
+    const todoIcons = props.todo.done ?
+        (
+            <div className="todo-item-icons">
+                <i className="far fa-trash-alt" onClick={deleteIconClickHandler}></i>
+                <i className="far fa-sticky-note" onClick={toggleIconClickHandler}></i>
+            </div>
+        ) :
+        (
             <div className="todo-item-icons">
                 <i className="far fa-trash-alt" onClick={deleteIconClickHandler}></i>
                 <i className="far fa-edit"></i>
-                <i className="far fa-check-square" onClick={doneIconClickHandler}></i>
+                <i className="far fa-check-square" onClick={toggleIconClickHandler}></i>
             </div>
+        );
+
+    return (
+        <div className={`todo-item${props.todo.done ? ' todo-item-done' : ''}`}>
+            <div>{props.todo.name}</div>
+            {todoIcons}
         </div>
     )
 }
 
 export default connect(
     null,
-    dispatch => ({ 
+    dispatch => ({
         deleteTodoItem: (todoId) => dispatch({ type: DELETE_TODO, id: todoId }),
         toggleTodoItem: (todoId) => dispatch({ type: TOGGLE_TODO, id: todoId })
- })
+    })
 )(TodoItem);
