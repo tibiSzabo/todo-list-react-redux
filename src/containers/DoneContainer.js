@@ -3,11 +3,9 @@ import TodoItem from '../components/todo/TodoItem';
 
 const DoneContainer = (props) => {
 
-    const todoList = props.todoList ? props.todoList.map(todoItem => {
-        if (todoItem.done) {
-            return <TodoItem todo={todoItem} key={todoItem.id}></TodoItem>
-        }
-    }) : null;
+    const todoList = props.todoList ?
+        props.todoList.map(todoItem => todoItem.done ? <TodoItem todo={todoItem} key={todoItem.id}></TodoItem> : null)
+        : null;
 
     return (
         <div className="todo-container todo-container-done">

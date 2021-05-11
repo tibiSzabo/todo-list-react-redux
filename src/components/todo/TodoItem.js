@@ -1,11 +1,12 @@
-import { connect } from "react-redux";
+import { connect, useDispatch } from "react-redux";
 import { DELETE_TODO, TOGGLE_TODO } from "../../store/actionTypes";
 
 const TodoItem = props => {
 
-    const deleteIconClickHandler = () => props.deleteTodoItem(props.todo.id);
+    const dispatch = useDispatch();
+    const deleteIconClickHandler = () => dispatch({ type: DELETE_TODO, id: props.todo.id });
     const editIconClickHandler = () => { };
-    const toggleIconClickHandler = () => props.toggleTodoItem(props.todo.id);
+    const toggleIconClickHandler = () => dispatch({ type: TOGGLE_TODO, id: props.todo.id })
 
     const todoIcons = props.todo.done ?
         (
@@ -30,10 +31,12 @@ const TodoItem = props => {
     )
 }
 
-export default connect(
-    null,
-    dispatch => ({
-        deleteTodoItem: (todoId) => dispatch({ type: DELETE_TODO, id: todoId }),
-        toggleTodoItem: (todoId) => dispatch({ type: TOGGLE_TODO, id: todoId })
-    })
-)(TodoItem);
+// export default connect(
+//     null,
+//     dispatch => ({
+//         deleteTodoItem: (todoId) => dispatch({ type: DELETE_TODO, id: todoId }),
+//         toggleTodoItem: (todoId) => dispatch({ type: TOGGLE_TODO, id: todoId })
+//     })
+// )(TodoItem);
+
+export default TodoItem;

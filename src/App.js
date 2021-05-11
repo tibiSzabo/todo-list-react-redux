@@ -5,51 +5,45 @@ import Overlay from './components/UI/Overlay'
 import Modal from './components/UI/Modal'
 import AddTodoForm from './components/todo/AddTodoForm'
 import './App.sass';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import store from './store/store';
 
-class App extends React.Component {
-    state = {
-        modalOpen: false
-    }
+const App = props => {
 
-    componentDidMount() {
-        this.storeSub = store.subscribe(this.persistStoreListener);
-    }
+    const [modalOpen, setModalOpen] = useState(false);
 
-    componentWillUnmount() {
-        this.storeSub.unsubscribe();
-    }
+    useEffect(() => {
+        const storeSub = store.subscribe(persistStoreListener);
+        return () => { storeSub.unsubscribe(); }
+    }, []);
 
-    addTodoHander = () => this.setState({ modalOpen: true });
+    const addTodoHander = () => setModalOpen(true);
 
-    closeModalHandler = () => this.setState({ modalOpen: false });
+    const closeModalHandler = () => setModalOpen(false);
 
-    persistStoreListener = () => localStorage.setItem('store', JSON.stringify(store.getState()));
+    const persistStoreListener = () => localStorage.setItem('store', JSON.stringify(store.getState()));
 
-    render() {
-        const addTodoModal = this.state.modalOpen ? (
-            <React.Fragment>
-                <Overlay clickHandler={this.closeModalHandler}></Overlay>
-                <Modal title="Add TODO" closeHandler={this.closeModalHandler}>
-                    <AddTodoForm closeHandler={this.closeModalHandler}></AddTodoForm>
-                </Modal>
-            </React.Fragment>
-        ) : null;
+    const addTodoModal = modalOpen ? (
+        <>
+            <Overlay clickHandler={closeModalHandler}></Overlay>
+            <Modal title="Add TODO" closeHandler={closeModalHandler}>
+                <AddTodoForm closeHandler={closeModalHandler}></AddTodoForm>
+            </Modal>
+        </>
+    ) : null;
 
-        return (
-            <div className="main">
-                <Title title="Todo list" />
-                {addTodoModal}
-                <TodoContainer todoList={this.props.todoItemList}></TodoContainer>
-                <button onClick={this.addTodoHander}>Add</button>
-                <DoneContainer todoList={this.props.todoItemList}></DoneContainer>
-            </div>
-        );
-    }
+    return (
+        <div className="main">
+            <Title title="Todo list" />
+            {addTodoModal}
+            <TodoContainer todoList={props.todoItemList}></TodoContainer>
+            <button onClick={addTodoHander}>Add</button>
+            <DoneContainer todoList={props.todoItemList}></DoneContainer>
+        </div>
+    );
 }
 
 export default connect(
-    state => ({todoItemList: state.todoItemList})
+    state => ({ todoItemList: state.todoItemList })
 )(App);
