@@ -1,5 +1,4 @@
 import Title from './components/UI/Title';
-import DoneContainer from './containers/DoneContainer';
 import TodoContainer from './containers/TodoContainer';
 import Modal from './components/UI/Modal';
 import AddTodoForm from './components/todo/AddTodoForm'
@@ -29,13 +28,16 @@ const App = props => {
             <Modal title="Add TODO" closeHandler={closeModalHandler} open={modalOpen}>
                 <AddTodoForm closeHandler={closeModalHandler}></AddTodoForm>
             </Modal>
-            <TodoContainer todoList={props.todoItemList}></TodoContainer>
+            <TodoContainer todoList={props.todoList}></TodoContainer>
             <button onClick={addTodoHander}>Add</button>
-            <DoneContainer todoList={props.todoItemList}></DoneContainer>
+            <TodoContainer todoList={props.doneList}></TodoContainer>
         </div>
     );
 }
 
 export default connect(
-    state => ({ todoItemList: state.todoItemList })
+    state => ({
+            todoList: state.todoItemList.filter(i => !i.done),
+            doneList: state.todoItemList.filter(i => i.done)
+        })
 )(App);

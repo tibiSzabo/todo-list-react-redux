@@ -5,8 +5,8 @@ import { ADD_TODO } from "../../store/actionTypes";
 import ErrorMessage from "../UI/ErrorMessage"
 
 const AddTodoForm = props => {
-    const [error, setError] = useState(false);
-    const [errorMsg, setErrorMsg] = useState(null);
+    const [ error, setError ] = useState(false);
+    const [ errorMsg, setErrorMsg ] = useState(null);
 
     const dispatch = useDispatch();
 

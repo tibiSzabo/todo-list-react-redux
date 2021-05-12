@@ -1,7 +1,11 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { DELETE_TODO, TOGGLE_TODO } from "../../store/actionTypes";
 
 const TodoItem = props => {
+    const [ editing, setEditing ] = useState(false);
+    const [ error, setError ] = useState(false);
+    const [ errorMsg, setErrorMsg ] = useState(null);
 
     const dispatch = useDispatch();
     const deleteIconClickHandler = () => dispatch({ type: DELETE_TODO, id: props.todo.id });
