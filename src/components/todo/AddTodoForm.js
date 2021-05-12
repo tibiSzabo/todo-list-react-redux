@@ -5,27 +5,13 @@ import { ADD_TODO } from "../../store/actionTypes";
 import ErrorMessage from "../UI/ErrorMessage"
 
 const AddTodoForm = props => {
-    console.log(new Date(), 'todo')
     const [error, setError] = useState(false);
     const [errorMsg, setErrorMsg] = useState(null);
 
     const dispatch = useDispatch();
 
     const inputRef = useRef(null);
-
-    useEffect(() => {
-        const newTodoName = inputRef.current.value;
-        if (!error && newTodoName) {
-            dispatch({ type: ADD_TODO, todoTitle: newTodoName });
-            props.closeHandler();
-        }
-    });
-
-    const handleAddTodo = () => {
-        const newTodoName = inputRef.current.value;
-        checkForTodoNameErrors(newTodoName);
-    }
-
+    
     useEffect(() => {
         inputRef.current.focus();
         inputRef.current.addEventListener('keydown', event => {
@@ -35,11 +21,19 @@ const AddTodoForm = props => {
         });
     }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
+    const handleAddTodo = () => {
+        const newTodoName = inputRef.current.value;
+        if (!todoHasNameError(newTodoName)) {
+            dispatch({ type: ADD_TODO, todoTitle: newTodoName });
+            props.closeHandler();
+        }
+    }
+
     const todoWithNameExists = name => props.todoItemList.find(todo => todo.name === name.trim());
 
     const todoNameInvalid = name => name.trim().length < 3;
 
-    const checkForTodoNameErrors = name => {
+    const todoHasNameError = name => {
         if (todoNameInvalid(name)) {
             setError(true);
             setErrorMsg('Invalid name, min. 3 characters.');
@@ -48,7 +42,9 @@ const AddTodoForm = props => {
             setErrorMsg('Name already exists.');
         } else {
             setError(false);
+            return false;
         }
+        return true;
     }
 
     return (

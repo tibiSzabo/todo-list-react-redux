@@ -1,8 +1,7 @@
 import Title from './components/UI/Title';
 import DoneContainer from './containers/DoneContainer';
 import TodoContainer from './containers/TodoContainer';
-import Overlay from './components/UI/Overlay'
-import Modal from './components/UI/Modal'
+import Modal from './components/UI/Modal';
 import AddTodoForm from './components/todo/AddTodoForm'
 import './App.sass';
 import React, { useEffect, useState } from 'react';
@@ -24,19 +23,12 @@ const App = props => {
 
     const persistStoreListener = () => localStorage.setItem('store', JSON.stringify(store.getState()));
 
-    const addTodoModal = modalOpen ? (
-        <>
-            <Overlay clickHandler={closeModalHandler}></Overlay>
-            <Modal title="Add TODO" closeHandler={closeModalHandler}>
-                <AddTodoForm closeHandler={closeModalHandler}></AddTodoForm>
-            </Modal>
-        </>
-    ) : null;
-
     return (
         <div className="main">
             <Title title="Todo list" />
-            {addTodoModal}
+            <Modal title="Add TODO" closeHandler={closeModalHandler} open={modalOpen}>
+                <AddTodoForm closeHandler={closeModalHandler}></AddTodoForm>
+            </Modal>
             <TodoContainer todoList={props.todoItemList}></TodoContainer>
             <button onClick={addTodoHander}>Add</button>
             <DoneContainer todoList={props.todoItemList}></DoneContainer>
