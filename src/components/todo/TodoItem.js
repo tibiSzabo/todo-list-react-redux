@@ -1,4 +1,4 @@
-import { connect, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { DELETE_TODO, TOGGLE_TODO } from "../../store/actionTypes";
 
 const TodoItem = props => {
@@ -30,13 +30,5 @@ const TodoItem = props => {
         </div>
     )
 }
-
-// export default connect(
-//     null,
-//     dispatch => ({
-//         deleteTodoItem: (todoId) => dispatch({ type: DELETE_TODO, id: todoId }),
-//         toggleTodoItem: (todoId) => dispatch({ type: TOGGLE_TODO, id: todoId })
-//     })
-// )(TodoItem);
 
 export default TodoItem;

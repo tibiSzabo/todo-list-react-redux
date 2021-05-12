@@ -1,69 +1,71 @@
-import React from "react";
-import { connect, useSelector } from "react-redux";
+import React, { useEffect, useRef, useState } from "react";
+import { connect, useDispatch } from "react-redux";
 
 import { ADD_TODO } from "../../store/actionTypes";
 import ErrorMessage from "../UI/ErrorMessage"
 
-class AddTodoForm extends React.Component {
+const AddTodoForm = props => {
+    console.log(new Date(), 'todo')
+    const [error, setError] = useState(false);
+    const [errorMsg, setErrorMsg] = useState(null);
 
-    constructor(props) {
-        super(props);
-        this.state = { error: false, errorMsg: null }
-        this.inputRef = React.createRef();
-    }
+    const dispatch = useDispatch();
 
-    componentDidMount() {
-        this.inputRef.current.focus();
-        this.inputRef.current.addEventListener('keydown', this.inputKeydownHandler);
-    }
+    const inputRef = useRef(null);
 
-    inputKeydownHandler = event => {
-        if (event.code === 'Enter') {
-            this.handleAddTodo();
+    useEffect(() => {
+        const newTodoName = inputRef.current.value;
+        if (!error && newTodoName) {
+            dispatch({ type: ADD_TODO, todoTitle: newTodoName });
+            props.closeHandler();
         }
+    });
+
+    const handleAddTodo = () => {
+        const newTodoName = inputRef.current.value;
+        checkForTodoNameErrors(newTodoName);
     }
 
-    handleAddTodo = () => {
-        const newTodoName = this.inputRef.current.value;
-        this.checkForTodoNameErrors(newTodoName);
-        if (!this.state.error) {
-            this.props.addTodoItem(newTodoName);
-            this.props.closeHandler();
-        }
-    }
+    useEffect(() => {
+        inputRef.current.focus();
+        inputRef.current.addEventListener('keydown', event => {
+            if (event.code === 'Enter') {
+                handleAddTodo();
+            }
+        });
+    }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
-    todoWithNameExists = name => this.props.todoItemList.find(todo => todo.name === name.trim());
+    const todoWithNameExists = name => props.todoItemList.find(todo => todo.name === name.trim());
 
-    todoNameInvalid = name => name.trim().length < 3;
+    const todoNameInvalid = name => name.trim().length < 3;
 
-    checkForTodoNameErrors = name => {
-        if (this.todoNameInvalid(name)) {
-            this.setState({ error: true, errorMsg: 'Invalid name! (min. 3 characters)' });
-        } else if (this.todoWithNameExists(name)) {
-            this.setState({ error: true, errorMsg: 'Todo with name already exists!' });
+    const checkForTodoNameErrors = name => {
+        if (todoNameInvalid(name)) {
+            setError(true);
+            setErrorMsg('Invalid name, min. 3 characters.');
+        } else if (todoWithNameExists(name)) {
+            setError(true);
+            setErrorMsg('Name already exists.');
         } else {
-            this.setState({ error: false });
+            setError(false);
         }
     }
 
-    render() {
-        const error = this.state.error ? <ErrorMessage msg={this.state.errorMsg}></ErrorMessage> : null;
-        return (
-            <div className="form">
-                <div className="input-group">
-                    <span className="label">Name:</span>
-                    <input type="text" ref={this.inputRef} />
-                </div>
-                {error}
-                <div className="submit">
-                    <button onClick={this.handleAddTodo}>Add</button>
-                </div>
+    return (
+        <div className="form">
+            <div className="input-group">
+                <span className="label">Name:</span>
+                <input type="text" ref={inputRef} />
             </div>
-        )
-    }
+            { error && <ErrorMessage msg={errorMsg} />}
+            <div className="submit">
+                <button onClick={handleAddTodo}>Add</button>
+            </div>
+        </div>
+    )
+
 }
 
 export default connect(
-    state => ({ todoItemList: state.todoItemList }),
-    dispatch => ({ addTodoItem: (todoTitle) => dispatch({ type: ADD_TODO, todoTitle: todoTitle }) })
+    state => ({ todoItemList: state.todoItemList })
 )(AddTodoForm);
