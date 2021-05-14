@@ -4,27 +4,29 @@ import Overlay from './Overlay';
 
 const Modal = (props) => {
 
+    const { open, closeHandler, children } = props;
+
     let modalRef = useRef(null);
 
     useEffect(() => {
-        if (props.open) {
+        if (open) {
             modalRef.current.addEventListener('keydown', handleKeydown);
         }
     });
 
     const handleKeydown = event => {
         if (event.code === 'Escape') {
-            props.closeHandler();
+            closeHandler();
         }
     };
 
-    return props.open ? (
+    return open ? (
         <>
-            <Overlay clickHandler={props.closeHandler}></Overlay>
+            <Overlay clickHandler={closeHandler}></Overlay>
             <div className="modal" ref={modalRef}>
                 <Title title={props.title}></Title>
                 <div className="modal-body">
-                    {props.children}
+                    {children}
                 </div>
             </div>
         </>

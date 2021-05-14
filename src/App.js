@@ -4,12 +4,15 @@ import Modal from './components/UI/Modal';
 import AddTodoForm from './components/todo/AddTodoForm'
 import './App.sass';
 import React, { useEffect, useState } from 'react';
-import { connect } from 'react-redux';
+import { useSelector } from 'react-redux';
 import store from './store/store';
 
-const App = props => {
+const App = () => {
 
     const [modalOpen, setModalOpen] = useState(false);
+
+    const todoItemListSelector = state => state?.todoItemList;
+    const todoItemList = useSelector(todoItemListSelector);
 
     useEffect(() => {
         const storeSub = store.subscribe(persistStoreListener);
@@ -28,16 +31,11 @@ const App = props => {
             <Modal title="Add TODO" closeHandler={closeModalHandler} open={modalOpen}>
                 <AddTodoForm closeHandler={closeModalHandler} />
             </Modal>
-            <TodoContainer todoList={props.todoList} />
+            <TodoContainer todoList={todoItemList.filter(i => !i.done)} />
             <button onClick={addTodoHander}>Add</button>
-            <TodoContainer todoList={props.doneList} />
+            <TodoContainer todoList={todoItemList.filter(i => i.done)} />
         </div>
     );
 }
 
-export default connect(
-    state => ({
-        todoList: state.todoItemList.filter(i => !i.done),
-        doneList: state.todoItemList.filter(i => i.done)
-    })
-)(App);
+export default App;
