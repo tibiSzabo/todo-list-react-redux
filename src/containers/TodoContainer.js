@@ -6,7 +6,7 @@ const TodoContainer = props => {
     return (
         <div className="todo-container">
             {props.todoList && props.todoList.map(todoItem =>
-                    <TodoItem todo={todoItem} key={todoItem.id}></TodoItem>)}
+                <TodoItem todo={todoItem} key={todoItem.id} />)}
         </div>
     );
 

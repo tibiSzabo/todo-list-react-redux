@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, TOGGLE_TODO } from "./actionTypes";
+import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from "./actionTypes";
 
 const initialState = {
     todoItemList: [
@@ -54,6 +54,20 @@ const todoReducer = (state = initialState, action) => {
                         if (curr.id === action.id) {
                             curr.done = !curr.done;
                             curr.order = curr.done ? null: createMaxOrder();
+                        }
+                        acc.push({ ...curr })
+                        return acc;
+                    }, [])
+                ]
+            }
+
+        case EDIT_TODO:
+            return {
+                ...state,
+                todoItemList: [
+                    ...state.todoItemList.reduce((acc, curr) => {
+                        if (curr.id === action.id) {
+                            curr.name = action.newName;
                         }
                         acc.push({ ...curr })
                         return acc;

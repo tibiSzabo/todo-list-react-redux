@@ -21,9 +21,17 @@
 button
     margin: 15px
     min-width: 70px
-    min-height: 26px
+    min-height: 30px
     font-family: 'ubuntu'
     cursor: pointer
+    background: none
+    border: none
+    box-shadow: 1px 1px 1px 1px #0000004f
+    &:hover
+        background-color: #8080804d
+
+input:focus-visible
+    outline: none
 
 .overlay
     position: fixed
@@ -85,7 +93,6 @@ button
         box-shadow: 4px 4px 9px -9px black, -2px -2px 8px -9px black
         margin: 15px
         &.todo-item-done
-            // background-color: #00000008
             opacity: 0.6
         .todo-item-icons
             display: flex
@@ -97,3 +104,14 @@ button
                 &.fa-check-square, &.fa-sticky-note
                     font-size: 21px
                     margin-top: 2px
+        .edit-todo-container
+            display: flex
+            align-items: center
+            input
+                font-size: 1.25rem
+                font-family: 'ubuntu'
+                height: 30px
+            button
+                margin: 0 10px
+            .error-message-container
+                font-size: 1rem

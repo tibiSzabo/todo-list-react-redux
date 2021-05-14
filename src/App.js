@@ -26,18 +26,18 @@ const App = props => {
         <div className="main">
             <Title title="Todo list" />
             <Modal title="Add TODO" closeHandler={closeModalHandler} open={modalOpen}>
-                <AddTodoForm closeHandler={closeModalHandler}></AddTodoForm>
+                <AddTodoForm closeHandler={closeModalHandler} />
             </Modal>
-            <TodoContainer todoList={props.todoList}></TodoContainer>
+            <TodoContainer todoList={props.todoList} />
             <button onClick={addTodoHander}>Add</button>
-            <TodoContainer todoList={props.doneList}></TodoContainer>
+            <TodoContainer todoList={props.doneList} />
         </div>
     );
 }
 
 export default connect(
     state => ({
-            todoList: state.todoItemList.filter(i => !i.done),
-            doneList: state.todoItemList.filter(i => i.done)
-        })
+        todoList: state.todoItemList.filter(i => !i.done),
+        doneList: state.todoItemList.filter(i => i.done)
+    })
 )(App);
