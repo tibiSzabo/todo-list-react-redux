@@ -33,7 +33,7 @@ const App = () => {
             </Modal>
             <TodoContainer todoList={todoItemList.filter(i => !i.done)} />
             <button onClick={addTodoHander}>Add</button>
-            <TodoContainer todoList={todoItemList.filter(i => i.done)} />
+            <TodoContainer todoList={todoItemList.filter(i => i.done)} doneContainer={true} />
         </div>
     );
 }

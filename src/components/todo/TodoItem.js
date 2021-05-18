@@ -1,5 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import clsx from 'clsx';
+
 import { DELETE_TODO, TOGGLE_TODO, EDIT_TODO } from "../../store/actionTypes";
 import ErrorMessage from "../UI/ErrorMessage";
 import { todoWithNameExists, todoNameInvalid } from "../../Functions"
@@ -54,18 +56,20 @@ const TodoItem = props => {
     }
 
     const deleteIconClickHandler = () => dispatch({ type: DELETE_TODO, id: todo.id });
-    
+
     const editIconClickHandler = () => setEditing(!editing);
 
     const toggleIconClickHandler = () => dispatch({ type: TOGGLE_TODO, id: todo.id });
 
     const todoHasPreviousName = () => todo.name === inputRef.current.value.trim();
 
+    const dragStartHandle = event => event.dataTransfer.setData('id', todo.id);
+
     const todoTitle = editing ?
         <div className="edit-todo-container">
             <input type="text" ref={inputRef} defaultValue={todo.name} autoFocus />
             <button>Save</button>
-            { error && <ErrorMessage msg={errorMsg} /> }
+            {error && <ErrorMessage msg={errorMsg} />}
         </div>
         : <div>{todo.name}</div>;
 
@@ -84,7 +88,12 @@ const TodoItem = props => {
         </div>;
 
     return (
-        <div className={`todo-item${todo.done ? ' todo-item-done' : ''}`}>
+        <div className={clsx('todo-item', todo.done && 'todo-item-done')}
+            draggable={true}
+            onDragStart={dragStartHandle}
+            data-id={todo.id}
+            data-order={todo.order}
+            style={{order: todo.order}}>
             {todoTitle}
             {todoIcons}
         </div>

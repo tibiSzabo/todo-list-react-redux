@@ -4,7 +4,7 @@ const initialState = {
     todoItemList: [
         // { name: String, id: Number, done: Boolean, order: Number }
     ],
-    nextId: 0
+    nextId: 1
 };
 
 const todoReducer = (state = initialState, action) => {

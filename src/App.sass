@@ -80,10 +80,12 @@ input:focus-visible
         margin-right: 10px
 
 .todo-container
+    display: flex
+    flex-direction: column
     width: 100%
+    min-height: 100px
     &.todo-container-done
-        margin-top: 80px
-
+        flex-grow: 1
     .todo-item
         display: flex
         align-items: center
