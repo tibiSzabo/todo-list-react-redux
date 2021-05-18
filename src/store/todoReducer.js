@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from "./actionTypes";
+import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from "./actions/actionTypes";
 
 const initialState = {
     todoItemList: [

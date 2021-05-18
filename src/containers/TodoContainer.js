@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
 
 import TodoItem from '../components/todo/TodoItem';
-import { REORDER_TODO, TOGGLE_TODO } from "../store/actionTypes";
+import * as todoActionTypes from "../store/actions/todoActions";
 
 
 const TodoContainer = props => {
@@ -22,7 +22,7 @@ const TodoContainer = props => {
                 // dropped in todo container on todo item, needs toggle & ordering
                 console.log(`dropped on element id: ${droppedOnTodoEl.dataset.id} order: ${droppedOnTodoEl.dataset.order} under: ${droppedUnderTodo(event.nativeEvent)}`);
             } else {
-                dispatch({ type: TOGGLE_TODO, id: droppedTodoId });
+                dispatch(todoActionTypes.toggleTodo(droppedTodoId));
             }
         }
 

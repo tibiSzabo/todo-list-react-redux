@@ -2,7 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { connect, useDispatch } from "react-redux";
 import { todoNameInvalid, todoWithNameExists } from "../../Functions";
 
-import { ADD_TODO } from "../../store/actionTypes";
+import * as todoActions from "../../store/actions/todoActions"
 import ErrorMessage from "../UI/ErrorMessage"
 
 const AddTodoForm = props => {
@@ -24,7 +24,7 @@ const AddTodoForm = props => {
     const handleAddTodo = () => {
         const newTodoName = inputRef.current.value;
         if (!todoHasNameError(newTodoName)) {
-            dispatch({ type: ADD_TODO, todoTitle: newTodoName });
+            dispatch(todoActions.addTodo(newTodoName));
             props.closeHandler();
         }
     }
