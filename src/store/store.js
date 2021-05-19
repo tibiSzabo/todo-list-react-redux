@@ -1,11 +1,17 @@
-import { createStore } from "redux";
+import { applyMiddleware, compose, createStore } from "redux";
+import thunk from "redux-thunk";
 import todoReducer from "./todoReducer";
 
 let preloadedState;
 const storageData = localStorage.getItem('store');
 
-if (storageData) {
-  preloadedState = JSON.parse(storageData);
-}
+if (storageData) { preloadedState = JSON.parse(storageData); }
 
-export default createStore(todoReducer, preloadedState, window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__());
+export default createStore(
+  todoReducer,
+  preloadedState,
+  compose(
+    applyMiddleware(thunk),
+    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  )
+);

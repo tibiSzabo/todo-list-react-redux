@@ -1,4 +1,4 @@
-import { ADD_TODO, DELETE_TODO, EDIT_TODO, TOGGLE_TODO } from "./actions/actionTypes";
+import { ADD_TODO, DELETE_TODO, EDIT_TODO, REORDER_TODO, TOGGLE_TODO } from "./actions/actionTypes";
 
 const initialState = {
     todoItemList: [
@@ -53,9 +53,9 @@ const todoReducer = (state = initialState, action) => {
                     ...state.todoItemList.reduce((acc, curr) => {
                         if (curr.id === action.id) {
                             curr.done = !curr.done;
-                            curr.order = curr.done ? null: createMaxOrder();
+                            curr.order = curr.done ? null : createMaxOrder();
                         }
-                        acc.push({ ...curr })
+                        acc.push({ ...curr });
                         return acc;
                     }, [])
                 ]
@@ -69,7 +69,20 @@ const todoReducer = (state = initialState, action) => {
                         if (curr.id === action.id) {
                             curr.name = action.newName;
                         }
-                        acc.push({ ...curr })
+                        acc.push({ ...curr });
+                        return acc;
+                    }, [])
+                ]
+            }
+
+        case REORDER_TODO:
+            return {
+                ...state,
+                todoItemList: [
+                    ...state.todoItemList.reduce((acc, curr) => {
+                        if (curr.order >= action.newOrder) { curr.order++; }
+                        if (curr.id === action.id) { curr.order = action.newOrder; }
+                        acc.push({ ...curr });
                         return acc;
                     }, [])
                 ]

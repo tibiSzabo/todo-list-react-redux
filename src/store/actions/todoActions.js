@@ -16,6 +16,13 @@ export const toggleTodo = id => {
     return { type: actionTypes.TOGGLE_TODO, id: id };
 };
 
-export const reorderTodo = id => {
-    return { type: actionTypes.REORDER_TODO, id: id };
+export const reorderTodo = (id, newOrder) => {
+    return { type: actionTypes.REORDER_TODO, id: id, newOrder: newOrder };
+};
+
+export const toggleAndReorderTodo = (id, newOrder) => {
+    return dispatch => {
+        dispatch(toggleTodo(id));
+        dispatch(reorderTodo(id, newOrder));
+    }
 };

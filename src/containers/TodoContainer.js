@@ -19,10 +19,19 @@ const TodoContainer = props => {
 
         if (!droppedToOwnContainer) {
             if (!doneContainer && droppedOnTodoEl) {
-                // dropped in todo container on todo item, needs toggle & ordering
+                // done -> todo: toggle & reorder
                 console.log(`dropped on element id: ${droppedOnTodoEl.dataset.id} order: ${droppedOnTodoEl.dataset.order} under: ${droppedUnderTodo(event.nativeEvent)}`);
+                const newOrder = +droppedOnTodoEl.dataset.order + (droppedUnderTodo(event.nativeEvent) ? 1 : 0);
+                dispatch(todoActionTypes.toggleAndReorderTodo(droppedTodoId, newOrder));
             } else {
+                // todo -> done: only toggle
                 dispatch(todoActionTypes.toggleTodo(droppedTodoId));
+            }
+        } else {
+            if (!doneContainer && droppedOnTodoEl) {
+                // todo -> todo: reorder
+                const newOrder = +droppedOnTodoEl.dataset.order + (droppedUnderTodo(event.nativeEvent) ? 1 : 0);
+                dispatch(todoActionTypes.reorderTodo(droppedTodoId, newOrder));
             }
         }
 
